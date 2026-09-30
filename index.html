@@ -1,0 +1,754 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Billetterie TFTT 12 vs 11</title>
+<meta name="description" content="TFTT 12 contre TFTT 11, 12 décembre à 20h00, salle de la Vigne à Thorigné-Fouillard. Réservez votre place.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Permanent+Marker&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0c10;
+    --surface: #14161d;
+    --surface-2: #1c1f29;
+    --line: #2a2e3b;
+    --text: #f4f4f6;
+    --muted: #a3a7b5;
+    --navy: #1b3a8c;
+    --navy-deep: #13265c;
+    --yellow: #f5c518;
+    --yellow-ink: #1a1400;
+    --paper: #f3efe6;
+    --paper-ink: #16181f;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: Inter, system-ui, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 16px; }
+
+  /* ---------- Bandeau ---------- */
+  .topbar {
+    background: var(--yellow);
+    color: var(--yellow-ink);
+    text-align: center;
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 8px 16px;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    padding: 40px 0 56px;
+    text-align: center;
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 0%, rgba(27,58,140,.45), transparent 70%),
+      var(--bg);
+    overflow: hidden;
+  }
+  .teams {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(8px, 4vw, 40px);
+  }
+  .teams figure { margin: 0; text-align: center; }
+  .nowrap { white-space: nowrap; }
+  .teams img {
+    width: clamp(110px, 26vw, 220px);
+    height: auto;
+    mix-blend-mode: lighten;
+    display: block;
+  }
+  .teams figcaption {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    margin-top: 4px;
+  }
+  .vs {
+    font-family: "Permanent Marker", cursive;
+    font-size: clamp(44px, 10vw, 92px);
+    line-height: 1;
+    transform: rotate(-8deg);
+  }
+  h1 {
+    font-family: "Bebas Neue", Impact, sans-serif;
+    font-weight: 400;
+    font-size: clamp(52px, 12vw, 112px);
+    line-height: .95;
+    margin: 28px 0 8px;
+    letter-spacing: .01em;
+  }
+  .where {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    font-size: clamp(14px, 2.6vw, 20px);
+    margin: 0;
+  }
+  .where span { color: var(--muted); padding: 0 .4em; }
+  .tagline {
+    font-family: "Permanent Marker", cursive;
+    font-size: clamp(22px, 5vw, 36px);
+    line-height: 1.15;
+    margin: 36px auto 0;
+    max-width: 560px;
+    transform: rotate(-3deg);
+  }
+  .tagline strong {
+    display: block;
+    color: var(--yellow);
+    font-weight: 400;
+    font-size: 1.5em;
+    text-decoration: underline;
+    text-decoration-thickness: 4px;
+    text-underline-offset: 8px;
+  }
+
+  .countdown {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 44px 0 28px;
+  }
+  .countdown div {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    min-width: 72px;
+    padding: 10px 8px 6px;
+  }
+  .countdown b {
+    display: block;
+    font-family: "Bebas Neue", Impact, sans-serif;
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .countdown small {
+    color: var(--muted);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+  }
+
+  .btn {
+    display: inline-block;
+    border: 0;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    text-decoration: none;
+    background: var(--yellow);
+    color: var(--yellow-ink);
+    padding: 14px 28px;
+    border-radius: 999px;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(245,197,24,.3); }
+  .btn:focus-visible { outline: 3px solid var(--text); outline-offset: 3px; }
+  .btn.ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--line);
+  }
+
+  /* ---------- Sections ---------- */
+  section { padding: 56px 0; }
+  h2 {
+    font-family: "Bebas Neue", Impact, sans-serif;
+    font-weight: 400;
+    font-size: clamp(36px, 7vw, 56px);
+    line-height: 1;
+    margin: 0 0 8px;
+  }
+  .lead { color: var(--muted); margin: 0 0 28px; }
+
+  .offers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .offer {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+  }
+  .offer.featured {
+    background: linear-gradient(160deg, var(--navy), var(--navy-deep));
+    border-color: var(--yellow);
+  }
+  .offer .badge {
+    position: absolute;
+    top: -11px;
+    right: 16px;
+    background: var(--yellow);
+    color: var(--yellow-ink);
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    padding: 3px 10px;
+    border-radius: 999px;
+  }
+  .offer h3 {
+    font-family: "Bebas Neue", Impact, sans-serif;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 1;
+    margin: 0 0 6px;
+  }
+  .offer .price {
+    font-family: "Bebas Neue", Impact, sans-serif;
+    font-size: 44px;
+    line-height: 1;
+    color: var(--yellow);
+    margin: 8px 0 12px;
+  }
+  .offer .price small { font-family: Inter, sans-serif; font-size: 13px; color: var(--muted); }
+  .offer.featured .price small { color: #c9d3f0; }
+  .offer ul { margin: 0 0 20px; padding-left: 18px; color: var(--muted); font-size: 14px; flex: 1; }
+  .offer.featured ul { color: #dfe5f7; }
+  .offer li + li { margin-top: 4px; }
+  .offer .btn { text-align: center; padding: 11px 18px; font-size: 14px; }
+
+  .food {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 22px;
+    margin-top: 16px;
+  }
+  .food .emoji { font-size: 44px; line-height: 1; }
+  .food h3 { margin: 0; font-size: 18px; }
+  .food p { margin: 2px 0 0; color: var(--muted); font-size: 14px; }
+  .food .tag {
+    margin-left: auto;
+    background: var(--yellow);
+    color: var(--yellow-ink);
+    font-family: "Bebas Neue", Impact, sans-serif;
+    font-size: 34px;
+    line-height: 1;
+    padding: 8px 14px 4px;
+    border-radius: 8px;
+    transform: rotate(-4deg);
+    white-space: nowrap;
+  }
+
+  /* ---------- Formulaire ---------- */
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: clamp(18px, 4vw, 32px);
+  }
+  form { display: grid; gap: 18px; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+  input[type=text], input[type=email], select {
+    width: 100%;
+    font: inherit;
+    color: var(--text);
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+  input:focus, select:focus { outline: 2px solid var(--yellow); outline-offset: 1px; border-color: transparent; }
+  fieldset { border: 0; padding: 0; margin: 0; }
+  legend { font-size: 13px; font-weight: 600; margin-bottom: 8px; padding: 0; }
+  .choices { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .choice input { position: absolute; opacity: 0; pointer-events: none; }
+  .choice span {
+    display: block;
+    text-align: center;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 12px 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color .15s, background .15s;
+  }
+  .choice span em { display: block; font-style: normal; font-size: 22px; margin-bottom: 2px; }
+  .choice input:checked + span { border-color: var(--yellow); background: rgba(245,197,24,.1); }
+  .choice input:focus-visible + span { outline: 2px solid var(--yellow); outline-offset: 2px; }
+
+  .stepper { display: flex; align-items: center; gap: 10px; }
+  .stepper button {
+    width: 42px; height: 42px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+    color: var(--text);
+    font-size: 20px;
+    cursor: pointer;
+  }
+  .stepper output {
+    min-width: 36px;
+    text-align: center;
+    font-family: "Bebas Neue", Impact, sans-serif;
+    font-size: 30px;
+    line-height: 1;
+  }
+  .summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    border-top: 1px dashed var(--line);
+    padding-top: 18px;
+    flex-wrap: wrap;
+  }
+  .summary .total { font-size: 14px; color: var(--muted); }
+  .summary .total b {
+    display: block;
+    color: var(--text);
+    font-family: "Bebas Neue", Impact, sans-serif;
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 1;
+  }
+  .fineprint { font-size: 12px; color: var(--muted); margin: 0; }
+
+  /* ---------- Billet ---------- */
+  #ticket-section[hidden] { display: none; }
+  .ticket {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    background: var(--paper);
+    color: var(--paper-ink);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,.5);
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .ticket-main { padding: 24px; position: relative; }
+  .ticket-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--bg);
+    margin: -24px -24px 18px;
+    padding: 14px 24px;
+    color: var(--text);
+  }
+  .ticket-head img { width: 64px; mix-blend-mode: lighten; }
+  .ticket-head .vs { font-size: 30px; }
+  .ticket-head .kind {
+    margin-left: auto;
+    font-family: "Bebas Neue", Impact, sans-serif;
+    font-size: 22px;
+    color: var(--yellow);
+    text-align: right;
+    line-height: 1;
+  }
+  .ticket h3 {
+    font-family: "Bebas Neue", Impact, sans-serif;
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 1;
+    margin: 0 0 12px;
+  }
+  .ticket dl {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: 10px 20px;
+    margin: 0;
+    justify-content: start;
+  }
+  .ticket dt { font-size: 10px; text-transform: uppercase; letter-spacing: .1em; color: #6b6f7b; }
+  .ticket dd { margin: 0; font-weight: 800; font-size: 15px; }
+  .ticket .stamp {
+    position: absolute;
+    right: 16px;
+    bottom: 14px;
+    font-family: "Permanent Marker", cursive;
+    color: #c0392b;
+    border: 3px solid #c0392b;
+    border-radius: 8px;
+    padding: 2px 10px;
+    transform: rotate(-10deg);
+    opacity: .85;
+    font-size: 15px;
+  }
+  .ticket-stub {
+    border-left: 2px dashed #b9b3a5;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    position: relative;
+  }
+  .ticket-stub::before, .ticket-stub::after {
+    content: "";
+    position: absolute;
+    left: -13px;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--bg);
+  }
+  .ticket-stub::before { top: -12px; }
+  .ticket-stub::after { bottom: -12px; }
+  .ticket-stub canvas { width: 120px; height: 120px; image-rendering: pixelated; }
+  .ticket-stub code { font-size: 12px; font-weight: 800; letter-spacing: .06em; }
+  .ticket-actions { display: flex; gap: 10px; justify-content: center; margin-top: 24px; flex-wrap: wrap; }
+  .ticket-note { text-align: center; color: var(--muted); font-size: 13px; margin-top: 16px; }
+
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 28px 0 40px;
+    color: var(--muted);
+    font-size: 13px;
+    text-align: center;
+  }
+
+  @media (max-width: 640px) {
+    .row { grid-template-columns: 1fr; }
+    .choices { grid-template-columns: 1fr; }
+    .choice span { display: flex; align-items: center; gap: 10px; text-align: left; }
+    .choice span em { margin: 0; }
+    .ticket { grid-template-columns: 1fr; }
+    .ticket-stub { border-left: 0; border-top: 2px dashed #b9b3a5; flex-direction: row; }
+    .ticket-stub::before, .ticket-stub::after { display: none; }
+    .ticket dl { grid-template-columns: repeat(2, auto); }
+    .food { flex-wrap: wrap; }
+    .countdown div { min-width: 62px; }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .topbar, .hero, #offres, #reserver, footer, .ticket-actions, .ticket-note { display: none !important; }
+    #ticket-section { padding: 0; }
+    .ticket { box-shadow: none; border: 1px solid #999; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">Derby 100 % Thorigné-Fouillard · Places limitées (ou pas)</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="teams">
+      <figure>
+        <img src="assets/tftt-12.png" alt="Logo TFTT, équipe 12">
+        <figcaption>Reçoit</figcaption>
+      </figure>
+      <div class="vs" aria-label="contre">VS</div>
+      <figure>
+        <img src="assets/tftt-11.png" alt="Logo TFTT, équipe 11">
+        <figcaption>Visiteur</figcaption>
+      </figure>
+    </div>
+
+    <h1>12 décembre <span class="nowrap">· 20h00</span></h1>
+    <p class="where">Salle de la Vigne<span>|</span>Thorigné-Fouillard</p>
+
+    <p class="tagline">Il ne peut y avoir qu'une seule <strong>moustache</strong> en ville</p>
+
+    <div class="countdown" id="countdown" aria-live="polite">
+      <div><b data-u="d">--</b><small>jours</small></div>
+      <div><b data-u="h">--</b><small>heures</small></div>
+      <div><b data-u="m">--</b><small>min</small></div>
+      <div><b data-u="s">--</b><small>sec</small></div>
+    </div>
+
+    <a class="btn" href="#reserver">Réserver ma place</a>
+  </div>
+</header>
+
+<main>
+  <section id="offres">
+    <div class="wrap">
+      <h2>Choisissez votre place</h2>
+      <p class="lead">Trois catégories, une seule moustache.</p>
+
+      <div class="offers">
+        <article class="offer">
+          <h3>Tribune populaire</h3>
+          <div class="price">0 € <small>/ personne</small></div>
+          <ul>
+            <li>Une chaise (probablement)</li>
+            <li>Vue imprenable sur la table 3</li>
+            <li>Droit d'applaudir les let</li>
+          </ul>
+          <a class="btn ghost" href="#reserver" data-pick="tribune">Choisir</a>
+        </article>
+
+        <article class="offer featured">
+          <span class="badge">Le plus demandé</span>
+          <h3>Pack Moustache</h3>
+          <div class="price">8 € <small>/ personne, payé sur place</small></div>
+          <ul>
+            <li>Une place en tribune</li>
+            <li>Un poulet frites à la buvette</li>
+            <li>Le respect éternel de la moustache</li>
+          </ul>
+          <a class="btn" href="#reserver" data-pick="moustache">Choisir</a>
+        </article>
+
+        <article class="offer">
+          <h3>Carré VIP</h3>
+          <div class="price">0 € <small>+ une moustache</small></div>
+          <ul>
+            <li>Premier rang, au bord de l'aire de jeu</li>
+            <li>Réservé aux porteurs de moustache (les postiches sont tolérées)</li>
+            <li>Poignée de main avec Michel, s'il est d'accord</li>
+          </ul>
+          <a class="btn ghost" href="#reserver" data-pick="vip">Choisir</a>
+        </article>
+      </div>
+
+      <div class="food">
+        <div class="emoji" aria-hidden="true">🍗🍟</div>
+        <div>
+          <h3>Poulet frites à la buvette</h3>
+          <p>Disponible toute la soirée en restauration. Réglement sur place.</p>
+        </div>
+        <div class="tag">8 €</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="reserver">
+    <div class="wrap">
+      <h2>Réservation</h2>
+      <p class="lead">Aucun paiement en ligne : on vous génère un billet, vous le montrez à l'entrée (ou pas, l'entrée est libre).</p>
+
+      <div class="panel">
+        <form id="form" novalidate>
+          <div class="row">
+            <div>
+              <label for="firstname">Prénom</label>
+              <input type="text" id="firstname" name="firstname" autocomplete="given-name" required>
+            </div>
+            <div>
+              <label for="lastname">Nom</label>
+              <input type="text" id="lastname" name="lastname" autocomplete="family-name" required>
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="category">Catégorie</label>
+              <select id="category" name="category">
+                <option value="tribune">Tribune populaire (0 €)</option>
+                <option value="moustache" selected>Pack Moustache (8 €)</option>
+                <option value="vip">Carré VIP (0 € + une moustache)</option>
+              </select>
+            </div>
+            <div>
+              <label id="qty-label">Nombre de places</label>
+              <div class="stepper" role="group" aria-labelledby="qty-label">
+                <button type="button" data-step="-1" aria-label="Retirer une place">−</button>
+                <output id="qty">1</output>
+                <button type="button" data-step="1" aria-label="Ajouter une place">+</button>
+              </div>
+            </div>
+          </div>
+
+          <fieldset>
+            <legend>Vous venez supporter</legend>
+            <div class="choices">
+              <label class="choice"><input type="radio" name="side" value="L'équipe 12" checked><span><em>🏠</em>L'équipe 12</span></label>
+              <label class="choice"><input type="radio" name="side" value="L'équipe 11"><span><em>🚌</em>L'équipe 11</span></label>
+              <label class="choice"><input type="radio" name="side" value="La moustache"><span><em>🥸</em>La moustache</span></label>
+            </div>
+          </fieldset>
+
+          <div class="summary">
+            <div class="total">À régler sur place<b id="total">8 €</b></div>
+            <button class="btn" type="submit">Générer mon billet</button>
+          </div>
+          <p class="fineprint">Billet humoristique, sans valeur. Aucune donnée n'est envoyée : tout reste dans votre navigateur.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section id="ticket-section" hidden>
+    <div class="wrap">
+      <div class="ticket" id="ticket">
+        <div class="ticket-main">
+          <div class="ticket-head">
+            <img src="assets/tftt-12.png" alt="">
+            <span class="vs">VS</span>
+            <img src="assets/tftt-11.png" alt="">
+            <span class="kind" id="t-kind"></span>
+          </div>
+          <h3 id="t-name"></h3>
+          <dl>
+            <div><dt>Date</dt><dd>12 déc.</dd></div>
+            <div><dt>Heure</dt><dd>20h00</dd></div>
+            <div><dt>Places</dt><dd id="t-qty"></dd></div>
+            <div><dt>Lieu</dt><dd>Salle de la Vigne</dd></div>
+            <div><dt>Supporter de</dt><dd id="t-side"></dd></div>
+            <div><dt>À régler</dt><dd id="t-total"></dd></div>
+          </dl>
+          <div class="stamp">Validé par la moustache</div>
+        </div>
+        <div class="ticket-stub">
+          <canvas id="t-code" width="21" height="21" aria-label="Code du billet"></canvas>
+          <code id="t-ref"></code>
+        </div>
+      </div>
+      <div class="ticket-actions">
+        <button class="btn" type="button" onclick="window.print()">Imprimer</button>
+        <button class="btn ghost" type="button" id="reset">Nouvelle réservation</button>
+      </div>
+      <p class="ticket-note">Une capture d'écran suffit. Rendez-vous le 12 décembre à 20h00.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    Thorigné-Fouillard Tennis de Table · Salle de la Vigne, Thorigné-Fouillard<br>
+    L'abus d'alcool est dangereux pour la santé, à consommer avec modération.
+  </div>
+</footer>
+
+<script>
+(() => {
+  const EVENT = new Date("2026-12-12T20:00:00+01:00");
+  const PRICES = { tribune: 0, moustache: 8, vip: 0 };
+  const LABELS = { tribune: "Tribune populaire", moustache: "Pack Moustache", vip: "Carré VIP" };
+  const STORE_KEY = "tftt-billet";
+
+  // ---- Compte à rebours
+  const cd = document.getElementById("countdown");
+  const cells = Object.fromEntries([...cd.querySelectorAll("b")].map(b => [b.dataset.u, b]));
+  function tick() {
+    let diff = Math.max(0, EVENT - Date.now());
+    const d = Math.floor(diff / 864e5); diff -= d * 864e5;
+    const h = Math.floor(diff / 36e5); diff -= h * 36e5;
+    const m = Math.floor(diff / 6e4); diff -= m * 6e4;
+    const s = Math.floor(diff / 1e3);
+    cells.d.textContent = d;
+    cells.h.textContent = String(h).padStart(2, "0");
+    cells.m.textContent = String(m).padStart(2, "0");
+    cells.s.textContent = String(s).padStart(2, "0");
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  // ---- Formulaire
+  const form = document.getElementById("form");
+  const category = document.getElementById("category");
+  const qtyOut = document.getElementById("qty");
+  const totalOut = document.getElementById("total");
+  let qty = 1;
+
+  function updateTotal() {
+    qtyOut.textContent = qty;
+    totalOut.textContent = (PRICES[category.value] * qty) + " €";
+  }
+  form.querySelectorAll("[data-step]").forEach(btn => btn.addEventListener("click", () => {
+    qty = Math.min(10, Math.max(1, qty + Number(btn.dataset.step)));
+    updateTotal();
+  }));
+  category.addEventListener("change", updateTotal);
+  document.querySelectorAll("[data-pick]").forEach(a => a.addEventListener("click", () => {
+    category.value = a.dataset.pick;
+    updateTotal();
+  }));
+
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    const first = form.firstname.value.trim();
+    const last = form.lastname.value.trim();
+    if (!first || !last) {
+      (first ? form.lastname : form.firstname).focus();
+      return;
+    }
+    const ticket = {
+      name: first + " " + last,
+      category: category.value,
+      qty,
+      side: form.side.value,
+      ref: "TFTT-" + Math.random().toString(36).slice(2, 7).toUpperCase(),
+    };
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(ticket)); } catch {}
+    showTicket(ticket, true);
+  });
+
+  // ---- Billet
+  function drawCode(canvas, seed) {
+    // Motif façon QR code, déterministe à partir de la référence (décoratif).
+    const n = 21, ctx = canvas.getContext("2d");
+    let h = 2166136261;
+    for (const c of seed) h = Math.imul(h ^ c.charCodeAt(0), 16777619);
+    const rand = () => ((h = Math.imul(h ^ (h >>> 15), 2246822519) ^ Math.imul(h ^ (h >>> 13), 3266489917)) >>> 0) / 4294967296;
+    ctx.fillStyle = "#f3efe6"; ctx.fillRect(0, 0, n, n);
+    ctx.fillStyle = "#16181f";
+    for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) if (rand() > .5) ctx.fillRect(x, y, 1, 1);
+    for (const [ox, oy] of [[0, 0], [n - 7, 0], [0, n - 7]]) {
+      ctx.fillStyle = "#16181f"; ctx.fillRect(ox, oy, 7, 7);
+      ctx.fillStyle = "#f3efe6"; ctx.fillRect(ox + 1, oy + 1, 5, 5);
+      ctx.fillStyle = "#16181f"; ctx.fillRect(ox + 2, oy + 2, 3, 3);
+      ctx.fillStyle = "#f3efe6";
+      ctx.fillRect(ox === 0 ? 7 : ox - 1, oy, 1, 8);
+      ctx.fillRect(ox, oy === 0 ? 7 : oy - 1, 8, 1);
+    }
+  }
+
+  const section = document.getElementById("ticket-section");
+  function showTicket(t, scroll) {
+    document.getElementById("t-kind").innerHTML = LABELS[t.category].replace(" ", "<br>");
+    document.getElementById("t-name").textContent = t.name;
+    document.getElementById("t-qty").textContent = t.qty;
+    document.getElementById("t-side").textContent = t.side;
+    document.getElementById("t-total").textContent = PRICES[t.category] * t.qty + " €";
+    document.getElementById("t-ref").textContent = t.ref;
+    drawCode(document.getElementById("t-code"), t.ref);
+    section.hidden = false;
+    if (scroll) section.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
+  document.getElementById("reset").addEventListener("click", () => {
+    try { localStorage.removeItem(STORE_KEY); } catch {}
+    section.hidden = true;
+    form.reset();
+    qty = 1;
+    updateTotal();
+    document.getElementById("reserver").scrollIntoView({ behavior: "smooth" });
+  });
+
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORE_KEY) || "null");
+    if (saved && LABELS[saved.category]) showTicket(saved, false);
+  } catch {}
+  updateTotal();
+})();
+</script>
+</body>
+</html>
