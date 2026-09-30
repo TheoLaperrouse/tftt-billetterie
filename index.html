@@ -462,7 +462,8 @@
     overflow: hidden;
     transition: border-color .2s, transform .15s;
   }
-  .poll button:hover { border-color: #3b4052; }
+  .poll button:hover:not(:disabled) { border-color: #3b4052; }
+  .poll button:disabled { cursor: default; }
   .poll button:active { transform: scale(.99); }
   .poll button:focus-visible { outline: 2px solid var(--yellow); outline-offset: 2px; }
   .poll button[aria-pressed="true"] { border-color: var(--yellow); }
@@ -485,8 +486,7 @@
     font-variant-numeric: tabular-nums;
   }
   .poll-meta { color: var(--muted); font-size: 13px; margin: 12px 0 0; min-height: 1.5em; }
-  .poll-meta strong { color: var(--yellow); }
-  .burst {
+    .burst {
     position: fixed;
     pointer-events: none;
     font-size: 22px;
@@ -555,7 +555,7 @@
 
   @media print {
     body { background: #fff; }
-    .topbar, .hero, #offres, #reserver, footer, .ticket-actions, .ticket-note { display: none !important; }
+    .topbar, .hero, #offres, #reserver, #infos, #prono, footer, .ticket-actions, .ticket-note { display: none !important; }
     #ticket-section { padding: 0; }
     .ticket { box-shadow: none; border: 1px solid #999; }
   }
@@ -596,19 +596,6 @@
 </header>
 
 <main>
-  <section id="prono">
-    <div class="wrap">
-      <h2>Pronostic du public</h2>
-      <p class="lead">Qui repart avec la victoire ? Votre voix compte (beaucoup trop).</p>
-      <div class="poll" id="poll">
-        <button type="button" data-team="12"><span class="bar"></span><span class="ico">🏠</span><span class="name">L'équipe 12</span><span class="pct">--</span></button>
-        <button type="button" data-team="11"><span class="bar"></span><span class="ico">🚌</span><span class="name">L'équipe 11</span><span class="pct">--</span></button>
-        <button type="button" data-team="moustache"><span class="bar"></span><span class="ico">🥸</span><span class="name">La moustache</span><span class="pct">--</span></button>
-      </div>
-      <p class="poll-meta" id="poll-meta" aria-live="polite"></p>
-    </div>
-  </section>
-
   <section id="offres">
     <div class="wrap">
       <h2>Choisissez votre place</h2>
@@ -759,13 +746,25 @@
           <p><strong>Lieu</strong>Salle de la Vigne<br>35235 Thorigné-Fouillard</p>
           <p><strong>Date</strong>12 décembre, début des matchs à 20h00</p>
           <p><strong>Restauration</strong>Poulet frites à 8 €, buvette sur place</p>
-          <p><a class="btn ghost" href="https://www.google.com/maps/search/?api=1&amp;query=Salle+de+la+Vigne+Thorign%C3%A9-Fouillard" target="_blank" rel="noopener">Itinéraire</a></p>
+          <p><a class="btn ghost" href="https://www.google.com/maps/dir/?api=1&amp;destination=48.152214,-1.576669" target="_blank" rel="noopener">Itinéraire</a></p>
         </div>
         <div class="map">
           <iframe title="Carte : Salle de la Vigne, Thorigné-Fouillard" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-            src="https://www.google.com/maps?q=Salle+de+la+Vigne,+Thorign%C3%A9-Fouillard&amp;z=15&amp;output=embed"></iframe>
+            src="https://www.google.com/maps?q=48.152214,-1.576669&amp;z=16&amp;output=embed"></iframe>
         </div>
       </div>
+    </div>
+  </section>
+  <section id="prono">
+    <div class="wrap">
+      <h2>Pronostic du public</h2>
+      <p class="lead">Qui repart avec la victoire ?</p>
+      <div class="poll" id="poll">
+        <button type="button" data-team="12"><span class="bar"></span><span class="ico">🏠</span><span class="name">L'équipe 12</span><span class="pct">--</span></button>
+        <button type="button" data-team="11"><span class="bar"></span><span class="ico">🚌</span><span class="name">L'équipe 11</span><span class="pct">--</span></button>
+        <button type="button" data-team="moustache"><span class="bar"></span><span class="ico">🥸</span><span class="name">La moustache</span><span class="pct">--</span></button>
+      </div>
+      <p class="poll-meta" id="poll-meta" aria-live="polite"></p>
     </div>
   </section>
 </main>
@@ -831,23 +830,48 @@
     setTimeout(() => { if (seats > 2) takeSeats(1); ghost(); }, rnd(15, 35) * 1000);
   })();
 
-  // ---- Pronostic du public (votes simulés)
+  // ---- Pronostic du public
+  // Base identique pour tous les visiteurs : elle grossit de façon irrégulière
+  // heure après heure depuis la mise en ligne. Chaque visiteur ajoute 1 voix.
   const poll = document.getElementById("poll");
   const pollMeta = document.getElementById("poll-meta");
   const pollBtns = [...poll.querySelectorAll("button")];
   const TEAM_SIDE = { "12": "L'équipe 12", "11": "L'équipe 11", moustache: "La moustache" };
-  const votes = store.get("tftt-votes") || { "12": rnd(90, 160), "11": rnd(80, 150), moustache: rnd(110, 190) };
-  let myVote = store.get("tftt-myvote");
+  const LAUNCH = Date.parse("2026-09-30T12:00:00Z");
+  const BASE = { "12": [23, .19], "11": [19, .16], moustache: [27, .23] };
+  function hash(str) {
+    let h = 2166136261;
+    for (let i = 0; i < str.length; i++) h = Math.imul(h ^ str.charCodeAt(i), 16777619);
+    h ^= h >>> 13; h = Math.imul(h, 1540483477); h ^= h >>> 15;
+    return (h >>> 0) / 4294967296;
+  }
+  const hours = Math.max(0, Math.floor((Math.min(Date.now(), EVENT) - LAUNCH) / 36e5));
+  const votes = {};
+  for (const [team, [start, rate]] of Object.entries(BASE)) {
+    let n = start;
+    for (let i = 0; i < hours; i++) if (hash(team + ":" + i) < rate) n++;
+    votes[team] = n;
+  }
+  let myVote = store.get("tftt-vote");
+  if (myVote && votes[myVote] !== undefined) votes[myVote]++;
+  else myVote = null;
 
   function renderPoll() {
-    const total = Object.values(votes).reduce((a, b) => a + b, 0);
+    const teams = Object.keys(votes);
+    const total = teams.reduce((a, t) => a + votes[t], 0);
+    // Méthode du plus fort reste : les pourcentages font toujours 100.
+    const raw = teams.map(t => votes[t] / total * 100);
+    const pct = raw.map(Math.floor);
+    raw.map((r, i) => [r - pct[i], i]).sort((a, b) => b[0] - a[0])
+      .slice(0, 100 - pct.reduce((a, b) => a + b, 0)).forEach(([, i]) => pct[i]++);
     pollBtns.forEach(b => {
-      const pct = Math.round(votes[b.dataset.team] / total * 100);
-      b.querySelector(".bar").style.width = pct + "%";
-      b.querySelector(".pct").textContent = pct + " %";
-      b.setAttribute("aria-pressed", String(myVote?.team === b.dataset.team));
+      const p = pct[teams.indexOf(b.dataset.team)];
+      b.querySelector(".bar").style.width = p + "%";
+      b.querySelector(".pct").textContent = p + " %";
+      b.setAttribute("aria-pressed", String(myVote === b.dataset.team));
+      b.disabled = !!myVote;
     });
-    return total;
+    pollMeta.textContent = total + " votes" + (myVote ? " · Merci, votre vote a bien été pris en compte." : " · Un seul vote par personne.");
   }
   function burst(btn, icon) {
     const r = btn.getBoundingClientRect();
@@ -864,29 +888,19 @@
       setTimeout(() => el.remove(), 950);
     }
   }
-  const QUIPS = {
-    "12": ["L'équipe qui reçoit vous remercie.", "À domicile, ça ne pardonne pas."],
-    "11": ["Audacieux. On respecte.", "L'équipe 11 a entendu votre appel."],
-    moustache: ["La moustache ne perd jamais.", "Michel approuve ce message."],
-  };
   pollBtns.forEach(btn => btn.addEventListener("click", () => {
+    if (myVote) return;
     const team = btn.dataset.team;
-    if (myVote) votes[myVote.team] -= myVote.weight;
-    const weight = rnd(12, 45);
-    votes[team] += weight;
-    myVote = { team, weight };
-    store.set("tftt-votes", votes);
-    store.set("tftt-myvote", myVote);
-    const total = renderPoll();
-    const quip = QUIPS[team][rnd(0, QUIPS[team].length - 1)];
-    pollMeta.innerHTML = "Votre voix a compté pour <strong>" + weight + " votes</strong>. " + quip + " (" + total + " votants)";
+    myVote = team;
+    votes[team]++;
+    store.set("tftt-vote", team);
+    renderPoll();
     btn.classList.remove("shake"); void btn.offsetWidth; btn.classList.add("shake");
     burst(btn, btn.querySelector(".ico").textContent);
     const radio = form.querySelector('input[name="side"][value="' + TEAM_SIDE[team] + '"]');
     if (radio) radio.checked = true;
   }));
-  const pollTotal = renderPoll();
-  pollMeta.textContent = myVote ? "Vous avez voté. Vous pouvez changer d'avis, on ne dira rien." : pollTotal + " votants. Et vous ?";
+  renderPoll();
 
   // ---- Formulaire
   const form = document.getElementById("form");
