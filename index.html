@@ -5,6 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Billetterie TFTT 12 vs 11</title>
 <meta name="description" content="TFTT 12 contre TFTT 11, 12 décembre à 20h00, salle de la Vigne à Thorigné-Fouillard. Réservez votre place.">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="assets/icon-512.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#0b0c10">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:url" content="https://theolaperrouse.github.io/tftt-billetterie/">
+<meta property="og:title" content="TFTT 12 vs TFTT 11 · 12 décembre, 20h00">
+<meta property="og:description" content="Il ne peut y avoir qu'une seule moustache en ville. Salle de la Vigne, Thorigné-Fouillard. Réservez votre place !">
+<meta property="og:image" content="https://theolaperrouse.github.io/tftt-billetterie/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Permanent+Marker&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
@@ -423,6 +436,100 @@
   .ticket-actions { display: flex; gap: 10px; justify-content: center; margin-top: 24px; flex-wrap: wrap; }
   .ticket-note { text-align: center; color: var(--muted); font-size: 13px; margin-top: 16px; }
 
+  /* ---------- Compteur de places ---------- */
+  .topbar b { font-variant-numeric: tabular-nums; }
+  .topbar.bump { animation: bump .5s ease; }
+  @keyframes bump { 30% { transform: scale(1.04); } }
+  .seats-hint { font-size: 13px; color: var(--yellow); font-weight: 600; margin: 4px 0 0; }
+
+  /* ---------- Pronostic ---------- */
+  .poll { display: grid; gap: 12px; }
+  .poll button {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    font: inherit;
+    color: var(--text);
+    text-align: left;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 14px 16px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: border-color .2s, transform .15s;
+  }
+  .poll button:hover { border-color: #3b4052; }
+  .poll button:active { transform: scale(.99); }
+  .poll button:focus-visible { outline: 2px solid var(--yellow); outline-offset: 2px; }
+  .poll button[aria-pressed="true"] { border-color: var(--yellow); }
+  .poll .bar {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 0;
+    background: linear-gradient(90deg, rgba(27,58,140,.55), rgba(27,58,140,.25));
+    transition: width .9s cubic-bezier(.2,.8,.2,1);
+    z-index: 0;
+  }
+  .poll button[aria-pressed="true"] .bar { background: linear-gradient(90deg, rgba(245,197,24,.35), rgba(245,197,24,.12)); }
+  .poll button > :not(.bar) { position: relative; z-index: 1; }
+  .poll .ico { font-size: 26px; line-height: 1; }
+  .poll .name { font-weight: 800; }
+  .poll .pct {
+    font-family: "Bebas Neue", Impact, sans-serif;
+    font-size: 32px;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .poll-meta { color: var(--muted); font-size: 13px; margin: 12px 0 0; min-height: 1.5em; }
+  .poll-meta strong { color: var(--yellow); }
+  .burst {
+    position: fixed;
+    pointer-events: none;
+    font-size: 22px;
+    z-index: 50;
+    animation: burst .9s ease-out forwards;
+  }
+  @keyframes burst {
+    to { transform: translate(var(--dx), var(--dy)) rotate(var(--r)); opacity: 0; }
+  }
+  .shake { animation: shake .4s ease; }
+  @keyframes shake {
+    20% { transform: translateX(-4px) rotate(-1deg); }
+    40% { transform: translateX(4px) rotate(1deg); }
+    60% { transform: translateX(-3px); }
+    80% { transform: translateX(2px); }
+  }
+
+  /* ---------- Moustache du billet ---------- */
+  .ticket h3 { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .ticket .stache { width: 84px; height: auto; transform: rotate(-6deg); flex: none; }
+
+  /* ---------- Infos pratiques ---------- */
+  .infos { display: grid; grid-template-columns: 1fr 1.6fr; gap: 16px; align-items: stretch; }
+  .infos .panel p { margin: 0 0 14px; }
+  .infos .panel p:last-child { margin: 0; }
+  .infos .panel strong { display: block; font-size: 12px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
+  .map {
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    min-height: 300px;
+    background: var(--surface);
+  }
+  .map iframe {
+    width: 100%;
+    height: 100%;
+    min-height: 300px;
+    border: 0;
+    display: block;
+    filter: invert(.9) hue-rotate(180deg) saturate(.7) brightness(.95);
+  }
+  @media (max-width: 640px) { .infos { grid-template-columns: 1fr; } }
+
   footer {
     border-top: 1px solid var(--line);
     padding: 28px 0 40px;
@@ -432,6 +539,8 @@
   }
 
   @media (max-width: 640px) {
+    .hide-sm { display: none; }
+    .ticket .stamp { position: static; display: inline-block; margin-top: 14px; }
     .row { grid-template-columns: 1fr; }
     .choices { grid-template-columns: 1fr; }
     .choice span { display: flex; align-items: center; gap: 10px; text-align: left; }
@@ -454,7 +563,7 @@
 </head>
 <body>
 
-<div class="topbar">Derby 100 % Thorigné-Fouillard · Places limitées (ou pas)</div>
+<div class="topbar" id="topbar" aria-live="polite"><span class="hide-sm">Derby 100 % Thorigné-Fouillard · </span>Plus que <b id="seats">--</b> places</div>
 
 <header class="hero">
   <div class="wrap">
@@ -487,6 +596,19 @@
 </header>
 
 <main>
+  <section id="prono">
+    <div class="wrap">
+      <h2>Pronostic du public</h2>
+      <p class="lead">Qui repart avec la victoire ? Votre voix compte (beaucoup trop).</p>
+      <div class="poll" id="poll">
+        <button type="button" data-team="12"><span class="bar"></span><span class="ico">🏠</span><span class="name">L'équipe 12</span><span class="pct">--</span></button>
+        <button type="button" data-team="11"><span class="bar"></span><span class="ico">🚌</span><span class="name">L'équipe 11</span><span class="pct">--</span></button>
+        <button type="button" data-team="moustache"><span class="bar"></span><span class="ico">🥸</span><span class="name">La moustache</span><span class="pct">--</span></button>
+      </div>
+      <p class="poll-meta" id="poll-meta" aria-live="polite"></p>
+    </div>
+  </section>
+
   <section id="offres">
     <div class="wrap">
       <h2>Choisissez votre place</h2>
@@ -498,8 +620,8 @@
           <div class="price">0 € <small>/ personne</small></div>
           <ul>
             <li>Une chaise (probablement)</li>
-            <li>Vue imprenable sur la table 3</li>
-            <li>Droit d'applaudir les let</li>
+            <li>Vue imprenable sur les deux tables</li>
+            <li>Droit de râler sur chaque filet</li>
           </ul>
           <a class="btn ghost" href="#reserver" data-pick="tribune">Choisir</a>
         </article>
@@ -586,7 +708,7 @@
           </fieldset>
 
           <div class="summary">
-            <div class="total">À régler sur place<b id="total">8 €</b></div>
+            <div class="total">À régler sur place<b id="total">8 €</b><p class="seats-hint" id="seats-hint"></p></div>
             <button class="btn" type="submit">Générer mon billet</button>
           </div>
           <p class="fineprint">Billet humoristique, sans valeur. Aucune donnée n'est envoyée : tout reste dans votre navigateur.</p>
@@ -605,7 +727,7 @@
             <img src="assets/tftt-11.png" alt="">
             <span class="kind" id="t-kind"></span>
           </div>
-          <h3 id="t-name"></h3>
+          <h3><span id="t-name"></span><svg class="stache" viewBox="0 0 200 60" aria-hidden="true"><path fill="#16181f" d="M100 22C90 8 70 6 55 16 42 25 30 32 12 26 4 23 2 16 8 12 3 22 12 28 22 26 40 40 70 46 92 34 96 32 98 30 100 30 102 30 104 32 108 34 130 46 160 40 178 26 188 28 197 22 192 12 198 16 196 23 188 26 170 32 158 25 145 16 130 6 110 8 100 22Z"/></svg></h3>
           <dl>
             <div><dt>Date</dt><dd>12 déc.</dd></div>
             <div><dt>Heure</dt><dd>20h00</dd></div>
@@ -626,6 +748,24 @@
         <button class="btn ghost" type="button" id="reset">Nouvelle réservation</button>
       </div>
       <p class="ticket-note">Une capture d'écran suffit. Rendez-vous le 12 décembre à 20h00.</p>
+    </div>
+  </section>
+  <section id="infos">
+    <div class="wrap">
+      <h2>Infos pratiques</h2>
+      <p class="lead">Venez tôt, les meilleures places partent vite (surtout le poulet frites).</p>
+      <div class="infos">
+        <div class="panel">
+          <p><strong>Lieu</strong>Salle de la Vigne<br>35235 Thorigné-Fouillard</p>
+          <p><strong>Date</strong>12 décembre, début des matchs à 20h00</p>
+          <p><strong>Restauration</strong>Poulet frites à 8 €, buvette sur place</p>
+          <p><a class="btn ghost" href="https://www.google.com/maps/search/?api=1&amp;query=Salle+de+la+Vigne+Thorign%C3%A9-Fouillard" target="_blank" rel="noopener">Itinéraire</a></p>
+        </div>
+        <div class="map">
+          <iframe title="Carte : Salle de la Vigne, Thorigné-Fouillard" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps?q=Salle+de+la+Vigne,+Thorign%C3%A9-Fouillard&amp;z=15&amp;output=embed"></iframe>
+        </div>
+      </div>
     </div>
   </section>
 </main>
@@ -660,6 +800,93 @@
   }
   tick();
   setInterval(tick, 1000);
+
+  const store = {
+    get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+  };
+  const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+
+  // ---- Compteur de places (purement décoratif)
+  const topbar = document.getElementById("topbar");
+  const seatsOut = document.getElementById("seats");
+  const seatsHint = document.getElementById("seats-hint");
+  let seats = store.get("tftt-seats") ?? rnd(23, 41);
+  function renderSeats(msg) {
+    seatsOut.textContent = seats;
+    seatsHint.textContent = msg || (seats <= 5 ? "Dépêchez-vous, plus que " + seats + " places !" : "");
+    topbar.classList.remove("bump"); void topbar.offsetWidth; topbar.classList.add("bump");
+    store.set("tftt-seats", seats);
+  }
+  function takeSeats(n) {
+    seats -= n;
+    if (seats <= 0) {
+      seats = 50;
+      renderSeats("Complet… ah non, on a ressorti des chaises du local : 50 places de plus !");
+    } else renderSeats();
+  }
+  renderSeats();
+  // Quelqu'un réserve de temps en temps…
+  (function ghost() {
+    setTimeout(() => { if (seats > 2) takeSeats(1); ghost(); }, rnd(15, 35) * 1000);
+  })();
+
+  // ---- Pronostic du public (votes simulés)
+  const poll = document.getElementById("poll");
+  const pollMeta = document.getElementById("poll-meta");
+  const pollBtns = [...poll.querySelectorAll("button")];
+  const TEAM_SIDE = { "12": "L'équipe 12", "11": "L'équipe 11", moustache: "La moustache" };
+  const votes = store.get("tftt-votes") || { "12": rnd(90, 160), "11": rnd(80, 150), moustache: rnd(110, 190) };
+  let myVote = store.get("tftt-myvote");
+
+  function renderPoll() {
+    const total = Object.values(votes).reduce((a, b) => a + b, 0);
+    pollBtns.forEach(b => {
+      const pct = Math.round(votes[b.dataset.team] / total * 100);
+      b.querySelector(".bar").style.width = pct + "%";
+      b.querySelector(".pct").textContent = pct + " %";
+      b.setAttribute("aria-pressed", String(myVote?.team === b.dataset.team));
+    });
+    return total;
+  }
+  function burst(btn, icon) {
+    const r = btn.getBoundingClientRect();
+    for (let i = 0; i < 14; i++) {
+      const el = document.createElement("span");
+      el.className = "burst";
+      el.textContent = icon;
+      el.style.left = r.left + r.width * (.15 + Math.random() * .7) + "px";
+      el.style.top = r.top + r.height / 2 + "px";
+      el.style.setProperty("--dx", rnd(-120, 120) + "px");
+      el.style.setProperty("--dy", rnd(-140, -30) + "px");
+      el.style.setProperty("--r", rnd(-180, 180) + "deg");
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 950);
+    }
+  }
+  const QUIPS = {
+    "12": ["L'équipe qui reçoit vous remercie.", "À domicile, ça ne pardonne pas."],
+    "11": ["Audacieux. On respecte.", "L'équipe 11 a entendu votre appel."],
+    moustache: ["La moustache ne perd jamais.", "Michel approuve ce message."],
+  };
+  pollBtns.forEach(btn => btn.addEventListener("click", () => {
+    const team = btn.dataset.team;
+    if (myVote) votes[myVote.team] -= myVote.weight;
+    const weight = rnd(12, 45);
+    votes[team] += weight;
+    myVote = { team, weight };
+    store.set("tftt-votes", votes);
+    store.set("tftt-myvote", myVote);
+    const total = renderPoll();
+    const quip = QUIPS[team][rnd(0, QUIPS[team].length - 1)];
+    pollMeta.innerHTML = "Votre voix a compté pour <strong>" + weight + " votes</strong>. " + quip + " (" + total + " votants)";
+    btn.classList.remove("shake"); void btn.offsetWidth; btn.classList.add("shake");
+    burst(btn, btn.querySelector(".ico").textContent);
+    const radio = form.querySelector('input[name="side"][value="' + TEAM_SIDE[team] + '"]');
+    if (radio) radio.checked = true;
+  }));
+  const pollTotal = renderPoll();
+  pollMeta.textContent = myVote ? "Vous avez voté. Vous pouvez changer d'avis, on ne dira rien." : pollTotal + " votants. Et vous ?";
 
   // ---- Formulaire
   const form = document.getElementById("form");
@@ -698,6 +925,7 @@
       ref: "TFTT-" + Math.random().toString(36).slice(2, 7).toUpperCase(),
     };
     try { localStorage.setItem(STORE_KEY, JSON.stringify(ticket)); } catch {}
+    takeSeats(qty);
     showTicket(ticket, true);
   });
 
